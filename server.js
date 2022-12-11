@@ -14,3 +14,7 @@ app.listen( 8080, ( req, res ) => {
 app.get( "/", ( req, res ) => {
     res.sendFile( `${ __dirname }/build/index.html` );
 } );
+
+app.get( "*", ( req, res ) => {
+    res.sendFile( `${ __dirname }/build/index.html` );
+} );
