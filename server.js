@@ -22,7 +22,6 @@ MongoClient.connect( "mongodb+srv://admin:qwer1234@cluster0.t2fk11g.mongodb.net/
 } );
 
 app.get( "/", ( req, res ) => {
-    db.collection( "member" ).find().toArray().then( res => { console.log(res) } );
     res.sendFile( `${ __dirname }/build/index.html` );
 } );
 
