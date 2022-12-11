@@ -1,4 +1,5 @@
-import { Container, Nav, Navbar } from 'react-bootstrap';
+import { Container, Nav, Navbar, Button } from 'react-bootstrap';
+import axios from 'axios';
 
 const GetHeader = ( props ) => {
     // const navigate = props.NavigateState();
@@ -18,8 +19,19 @@ const GetHeader = ( props ) => {
 
 const GetFooter = () => {
     return (
-        <h1>TEST</h1>
+        <Button onClick={ async () => {
+            await getMember().then( memberRes => {
+                console.log({memberRes});
+            } );
+        } }>TEST</Button>
     )
+}
+
+const getMember = async () => {
+    await axios.get( "/getMember" ).then( res => {
+        console.log(res.data);
+        return res.data;
+    })
 }
 
 export default {
