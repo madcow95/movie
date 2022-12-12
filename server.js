@@ -17,7 +17,7 @@ MongoClient.connect( "mongodb+srv://admin:qwer1234@cluster0.t2fk11g.mongodb.net/
     if( err ) {
         return console.log( { err } );
     }
-    db = client.db( "todoapp" );
+    db = client.db( "movieSearch" );
     http.listen( 8080 );
 } );
 
@@ -26,8 +26,19 @@ app.get( "/", ( req, res ) => {
 } );
 
 app.get( "/getMember", async ( req, res ) => {
-    await db.collection("member").find().toArray().then( findUserRes => {
+    await db.collection( "member" ).find().toArray().then( findUserRes => {
+        console.log(findUserRes);
         return res.json( findUserRes );
+    } );
+} );
+
+app.post( "/memberInfo", async ( req, res ) => {
+    const findTargettUserName = req.body.username;
+    console.log(findTargettUserName);
+    await db.collection( "member" ).findOne( { username : findTargettUserName } ).then( findUserRes => {
+        const returnData = findUserRes && res.json( findUserRes );
+        console.log(returnData);
+        return returnData;
     } );
 } );
 

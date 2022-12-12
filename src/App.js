@@ -1,6 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { useState } from 'react';
+import axios from 'axios';
 import component from "./Page/component";
 import memberPage from "./Page/member";
 
@@ -13,12 +14,12 @@ function App() {
       <component.GetHeader/>
         <Routes>
           {/* <Route path="/"/> */}
-          <Route path="/login" element={<memberPage.GetLoginPage />} />
+          <Route path="/login" element={<memberPage.GetLoginPage AxiosState={ axios }/>} />
           {/* <Route path="/join" element={ <compUtil.GetJoinPage /> } />
           <Route path="/cart" element={ <compUtil.GetCartPage /> } />
           <Route path="/*" element={ <div>잘못 들어오신거 같은데요?</div> } /> */}
         </Routes>
-      <component.GetFooter/>  
+      {/* <component.GetFooter/>   */}
     </>
   );
 }
