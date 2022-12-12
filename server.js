@@ -27,16 +27,14 @@ app.get( "/", ( req, res ) => {
 
 app.get( "/getMember", async ( req, res ) => {
     await db.collection( "member" ).find().toArray().then( findUserRes => {
-        console.log(findUserRes);
         return res.json( findUserRes );
     } );
 } );
 
 app.post( "/memberInfo", async ( req, res ) => {
     const findTargettUserName = req.body.username;
-    console.log(findTargettUserName);
     await db.collection( "member" ).findOne( { username : findTargettUserName } ).then( findUserRes => {
-        const returnData = findUserRes && res.json( findUserRes );
+        const returnData = findUserRes ? res.json( findUserRes ) : false;
         console.log(returnData);
         return returnData;
     } );

@@ -13,14 +13,18 @@ const GetLoginPage = ( props ) => {
                 <Form.Group className="mb-3" controlId="Password">
                     <Form.Control type="password" placeholder="비밀번호" />
                 </Form.Group>
-                <Button variant="primary" type="button" onClick={ () => {
+                <Button variant="primary" type="button" onClick={ async () => {
                     const enterdUserName = $( "#UserName" ).val();
                     const enterdPassword = $( "#Password" ).val();
-                    axios.post( "/memberInfo", {
+                    await axios.post( "/memberInfo", {
                         username : enterdUserName,
                         password : enterdPassword
                     } ).then( findRes => {
-                        console.log({findRes});
+                        if( findRes ) {
+                            console.log(findRes);
+                        } else {
+                            console.log("no result");
+                        }
                     } );
                 } }>
                     로그인

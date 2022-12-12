@@ -4,6 +4,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import component from "./Page/component";
 import memberPage from "./Page/member";
+import main from "./Page/main";
 
 function App() {
   // const navigate = useNavigate();
@@ -13,7 +14,7 @@ function App() {
       {/* <component.GetHeader NavigateState={ navigate }/> */}
       <component.GetHeader/>
         <Routes>
-          {/* <Route path="/"/> */}
+          <Route path="/" element={ <main.getMainPage/> }/>
           <Route path="/login" element={<memberPage.GetLoginPage AxiosState={ axios }/>} />
           {/* <Route path="/join" element={ <compUtil.GetJoinPage /> } />
           <Route path="/cart" element={ <compUtil.GetCartPage /> } />
