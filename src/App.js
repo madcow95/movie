@@ -12,10 +12,10 @@ function App() {
     <>
       {/* <component.GetHeader NavigateState={ navigate }/> */}
       <component.GetHeader/>
-      <main.getMainPage path="/"/>
         <Routes>
-          {/* <Route path="/" element={ <main.getMainPage/> }/> */}
+          <Route path="/" element={<main.getMainPage/>} />
           <Route path="/login" element={<memberPage.GetLoginPage AxiosState={ axios }/>} />
+          <Route path="/join" element={<memberPage.GetJoinPage AxiosState={ axios } MainState={ useState }/>} />
           {/* <Route path="/join" element={ <compUtil.GetJoinPage /> } />
           <Route path="/cart" element={ <compUtil.GetCartPage /> } />
           <Route path="/*" element={ <div>잘못 들어오신거 같은데요?</div> } /> */}
