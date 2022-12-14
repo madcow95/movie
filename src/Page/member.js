@@ -47,11 +47,7 @@ const GetJoinPage = ( props ) => {
                     className="mb-3"
                 >
                     <Form.Control type="email" placeholder="아이디" onChange={ ( e ) => {
-                        if( e.target.value.length >= 4 ) {
-                            setUserNameCheck( true );
-                        } else {
-                            setUserNameCheck( false );
-                        }
+                        e.target.value.length >= 4 ? setUserNameCheck( true ) : setUserNameCheck( false );
                     } }/>
                     { 
                     !UserNameCheck && 
