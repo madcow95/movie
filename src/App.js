@@ -1,4 +1,3 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { useState } from 'react';
 import axios from 'axios';
@@ -13,8 +12,9 @@ function App() {
     <>
       {/* <component.GetHeader NavigateState={ navigate }/> */}
       <component.GetHeader/>
+      <main.getMainPage path="/"/>
         <Routes>
-          <Route path="/" element={ <main.getMainPage/> }/>
+          {/* <Route path="/" element={ <main.getMainPage/> }/> */}
           <Route path="/login" element={<memberPage.GetLoginPage AxiosState={ axios }/>} />
           {/* <Route path="/join" element={ <compUtil.GetJoinPage /> } />
           <Route path="/cart" element={ <compUtil.GetCartPage /> } />

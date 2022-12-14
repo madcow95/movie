@@ -1,7 +1,11 @@
 import Carousel from 'react-bootstrap/Carousel'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const getMainPage = () => {
     return (
+      <div style={{
+        backgroundColor: "black"
+      }}>
         <Carousel fade>
           <Carousel.Item>
             <img
@@ -41,6 +45,7 @@ const getMainPage = () => {
             </Carousel.Caption>
           </Carousel.Item>
         </Carousel>
+      </div>
     );
 }
 
