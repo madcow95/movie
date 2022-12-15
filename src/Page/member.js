@@ -38,6 +38,8 @@ const GetJoinPage = ( props ) => {
     const axios = props.AxiosState;
     const MainState = props.MainState;
     const [ UserNameCheck, setUserNameCheck ] = MainState( false );
+    // const [ UserNameExistCheck, setUserNameExistCheck ] = MainState( false );
+    const [ UserNameExist, setUserNameExist ] = MainState( "사용가능한 아이디 입니다." );
     return (
         <div className='container mt-5'>
             <Form>
@@ -46,14 +48,27 @@ const GetJoinPage = ( props ) => {
                     label="Email address"
                     className="mb-3"
                 >
-                    <Form.Control type="email" placeholder="아이디" onChange={ ( e ) => {
+                    <Form.Control type="text" placeholder="아이디" onChange={ async ( e ) => {
                         e.target.value.length >= 4 ? setUserNameCheck( true ) : setUserNameCheck( false );
+                        if( e.target.value.length >= 4 ) {
+                            const searchUser = await axios.post( "/memberInfo", {
+                                    username : e.target.value
+                            } );
+                            searchUser ? setUserNameExist( "사용중인 아이디 입니다." ) : setUserNameExist( "사용가능한 아이디 입니다." );
+                        }
                     } }/>
                     { 
-                    !UserNameCheck && 
-                    <Form.Text id="passwordHelpBlock" muted>
-                        아이디는 4글자 이상 입력해주세요
-                    </Form.Text> 
+                        !UserNameCheck && 
+                        <Form.Text id="passwordHelpBlock" muted>
+                            아이디는 4글자 이상 입력해주세요.
+                        </Form.Text> 
+                    }
+                    <br></br>
+                    {
+                        UserNameCheck &&  
+                        <Form.Text id="UserExistCheck" muted>
+                            { UserNameExist }
+                        </Form.Text> 
                     }
                 </FloatingLabel>
                 <FloatingLabel
@@ -89,16 +104,15 @@ const GetJoinPage = ( props ) => {
                         alert( `다음 항목은 필수값입니다.\n${ ValidationProp.toString() }`);
                         return;
                     }
-                    // await axios.post( "/memberInfo", {
-                    //     username : enteredUserName,
-                    //     password : enteredPassword
-                    // } ).then( findRes => {
-                    //     if( findRes ) {
-                    //         console.log(findRes);
-                    //     } else {
-                    //         console.log("no result");
-                    //     }
-                    // } );
+                    await axios.post( "/memberInfo", {
+                        username : enteredUserName
+                    } ).then( findRes => {
+                        if( findRes ) {
+                            console.log(findRes);
+                        } else {
+                            console.log("no result");
+                        }
+                    } );
                 } }>
                     로그인
                 </Button>
