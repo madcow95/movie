@@ -34,12 +34,25 @@ const GetLoginPage = ( props ) => {
     )
 }
 
+const JoinValidation = async ( e, axios ) => {
+    if( e.target.value.length >= 4 ) {
+        const SearchRes = await axios.post( "/memberInfo", {
+            username : e.target.value
+        } ).catch( e => {
+            console.log({e});
+        } );
+        console.log({SearchRes});
+        return SearchRes;
+    } else {
+        return false;
+    }
+}
+
 const GetJoinPage = ( props ) => {
     const axios = props.AxiosState;
     const MainState = props.MainState;
     const [ UserNameCheck, setUserNameCheck ] = MainState( false );
-    const [ SearchUser, setSearchUser ] = MainState( undefined );
-    const [ UserNameExist, setUserNameExist ] = MainState( "사용가능한 아이디 입니다." );
+    const [ SearchUser, setSearchUser ] = MainState( false );
     return (
         <div className='container mt-5'>
             <Form>
@@ -50,34 +63,25 @@ const GetJoinPage = ( props ) => {
                 >
                     <Form.Control type="text" placeholder="아이디" onChange={ async ( e ) => {
                         e.target.value.length >= 4 ? setUserNameCheck( true ) : setUserNameCheck( false );
-
+                        setSearchUser( false );
                         if( e.target.value.length >= 4 ) {
-                            await axios.post( "/memberInfo", {
-                                username : e.target.value
-                            } ).then( SearchRes => {
-                                console.log({SearchRes});
-                                setSearchUser( SearchRes );
-                            } ).catch( e => {
-                                console.log({e});
-                            } );
+                            await setSearchUser( await JoinValidation( e, axios ) );
                         } else {
-                            setSearchUser( undefined );
+                            await setSearchUser( false );
                         }
-
-                        SearchUser ? setUserNameExist( "사용중인 아이디 입니다." ) : setUserNameExist( "사용가능한 아이디 입니다." );
-                    } }/>
-                    { 
-                        !UserNameCheck &&
-                        <Form.Text id="passwordHelpBlock" muted>
-                            아이디는 4글자 이상 입력해주세요.
-                        </Form.Text>
-                    }
-                    {
-                        SearchUser && 
-                        <Form.Text id="UserExistCheck" muted>
-                            { UserNameExist }
-                        </Form.Text>
-                    }
+                     } }/>
+                        { 
+                            !UserNameCheck &&
+                            <Form.Text id="passwordHelpBlock" muted>
+                                아이디는 4글자 이상 입력해주세요.
+                            </Form.Text>
+                        }
+                        {
+                            UserNameCheck &&
+                            <Form.Text id="UserExistCheck" muted>
+                                { SearchUser ? "이미 사용중인 아이디 입니다." : "사용 가능한 아이디 입니다." }
+                            </Form.Text>
+                        }
                 </FloatingLabel>
                 <FloatingLabel
                     className="mb-3" 

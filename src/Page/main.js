@@ -1,10 +1,30 @@
 import Carousel from 'react-bootstrap/Carousel'
 import CardGroup from 'react-bootstrap/CardGroup'
-import Card from 'react-bootstrap/Card'
+import Card from 'react-bootstrap/Card';
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
 
 const getMainPage = () => {
     return (
       <>
+        <div className='container mt-4 mb-4' style={{ width : "50%"}}>
+        <InputGroup className="mb-3">
+          <DropdownButton
+            variant="outline-secondary"
+            title="Dropdown"
+            id="input-group-dropdown-1"
+          >
+            <Dropdown.Item href="#">Action</Dropdown.Item>
+            <Dropdown.Item href="#">Another action</Dropdown.Item>
+            <Dropdown.Item href="#">Something else here</Dropdown.Item>
+            <Dropdown.Divider />
+            <Dropdown.Item href="#">Separated link</Dropdown.Item>
+          </DropdownButton>
+          <Form.Control aria-label="Text input with dropdown button" />
+        </InputGroup>
+        </div>
         <div
             style={{
               height : "350px"
