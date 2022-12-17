@@ -38,7 +38,7 @@ const GetJoinPage = ( props ) => {
     const axios = props.AxiosState;
     const MainState = props.MainState;
     const [ UserNameCheck, setUserNameCheck ] = MainState( false );
-    // const [ UserNameExistCheck, setUserNameExistCheck ] = MainState( false );
+    const [ SearchUser, setSearchUser ] = MainState( undefined );
     const [ UserNameExist, setUserNameExist ] = MainState( "사용가능한 아이디 입니다." );
     return (
         <div className='container mt-5'>
@@ -50,25 +50,33 @@ const GetJoinPage = ( props ) => {
                 >
                     <Form.Control type="text" placeholder="아이디" onChange={ async ( e ) => {
                         e.target.value.length >= 4 ? setUserNameCheck( true ) : setUserNameCheck( false );
+
                         if( e.target.value.length >= 4 ) {
-                            const searchUser = await axios.post( "/memberInfo", {
-                                    username : e.target.value
+                            await axios.post( "/memberInfo", {
+                                username : e.target.value
+                            } ).then( SearchRes => {
+                                console.log({SearchRes});
+                                setSearchUser( SearchRes );
+                            } ).catch( e => {
+                                console.log({e});
                             } );
-                            searchUser ? setUserNameExist( "사용중인 아이디 입니다." ) : setUserNameExist( "사용가능한 아이디 입니다." );
+                        } else {
+                            setSearchUser( undefined );
                         }
+
+                        SearchUser ? setUserNameExist( "사용중인 아이디 입니다." ) : setUserNameExist( "사용가능한 아이디 입니다." );
                     } }/>
                     { 
-                        !UserNameCheck && 
+                        !UserNameCheck &&
                         <Form.Text id="passwordHelpBlock" muted>
                             아이디는 4글자 이상 입력해주세요.
-                        </Form.Text> 
+                        </Form.Text>
                     }
-                    <br></br>
                     {
-                        UserNameCheck &&  
+                        SearchUser && 
                         <Form.Text id="UserExistCheck" muted>
                             { UserNameExist }
-                        </Form.Text> 
+                        </Form.Text>
                     }
                 </FloatingLabel>
                 <FloatingLabel

@@ -33,10 +33,9 @@ app.get( "/getMember", async ( req, res ) => {
 
 app.post( "/memberInfo", async ( req, res ) => {
     const findTargettUserName = req.body.username;
-    await db.collection( "member" ).findOne( { username : findTargettUserName } ).then( findUserRes => {
-        const returnData = findUserRes ? res.json( findUserRes ) : false;
-        return returnData;
-    } );
+    const findUserRes = await db.collection( "member" ).findOne( { username : findTargettUserName } );
+    const returnData = findUserRes ? res.json( findUserRes ) : false;
+    return returnData;
 } );
 
 app.get( "*", ( req, res ) => {
