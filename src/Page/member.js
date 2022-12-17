@@ -63,11 +63,9 @@ const GetJoinPage = ( props ) => {
                 >
                     <Form.Control type="text" placeholder="아이디" onChange={ async ( e ) => {
                         e.target.value.length >= 4 ? setUserNameCheck( true ) : setUserNameCheck( false );
-                        setSearchUser( false );
+                        await setSearchUser( false );
                         if( e.target.value.length >= 4 ) {
                             await setSearchUser( await JoinValidation( e, axios ) );
-                        } else {
-                            await setSearchUser( false );
                         }
                      } }/>
                         { 
