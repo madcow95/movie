@@ -41,7 +41,6 @@ const JoinValidation = async ( e, axios ) => {
         } ).catch( e => {
             console.log({e});
         } );
-        console.log({SearchRes});
         return SearchRes;
     } else {
         return false;
@@ -62,10 +61,16 @@ const GetJoinPage = ( props ) => {
                     className="mb-3"
                 >
                     <Form.Control type="text" placeholder="아이디" onChange={ async ( e ) => {
-                        e.target.value.length >= 4 ? setUserNameCheck( true ) : setUserNameCheck( false );
+                        const LengthCheck = e.target.value.length >= 4;
+                        LengthCheck >= 4 ? setUserNameCheck( true ) : setUserNameCheck( false );
                         await setSearchUser( false );
-                        if( e.target.value.length >= 4 ) {
+                        if( LengthCheck >= 4 ) {
                             await setSearchUser( await JoinValidation( e, axios ) );
+                            if( SearchUser ) {
+                                $( "#JoinBtn" ).attr( "disabled", true );
+                            } else {
+                                $( "#JoinBtn" ).attr( "disabled", false );
+                            }
                         }
                      } }/>
                         { 
@@ -99,14 +104,14 @@ const GetJoinPage = ( props ) => {
                     label="Phone">
                     <Form.Control type="text" placeholder="전화번호" />
                 </FloatingLabel>
-                <Button variant="primary" type="button" onClick={ async () => {
-                    const enteredUserName = $( "#UserName" ).val();
-                    const enteredPassword = $( "#Password" ).val();
-                    const enteredEmail = $( "#Email" ).val();
-                    const enteredPhone = $( "#Phone" ).val();
+                <Button variant="primary" type="button" id="JoinBtn" onClick={ async () => {
+                    const enteredUserName = $( "#UserName" );
+                    const enteredPassword = $( "#Password" );
+                    const enteredEmail = $( "#Email" );
+                    const enteredPhone = $( "#Phone" );
                     const ValidationProp = [];
-                    [ "UserName", "Password" ].forEach( p => {
-                        if( !$( `#${ p }` ).val() ) {
+                    [ enteredUserName, enteredPassword ].forEach( p => {
+                        if( !p.val() ) {
                             ValidationProp.push( document.getElementById( p ).placeholder );
                         }
                     } );
@@ -115,7 +120,7 @@ const GetJoinPage = ( props ) => {
                         return;
                     }
                     await axios.post( "/memberInfo", {
-                        username : enteredUserName
+                        username : enteredUserName.val()
                     } ).then( findRes => {
                         if( findRes ) {
                             console.log(findRes);
@@ -124,7 +129,7 @@ const GetJoinPage = ( props ) => {
                         }
                     } );
                 } }>
-                    로그인
+                    회원가입
                 </Button>
             </Form>
         </div>

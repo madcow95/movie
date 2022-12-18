@@ -9,22 +9,22 @@ import Form from 'react-bootstrap/Form';
 import interstella from '../Image/interstella.jpg';
 import OneNine from '../Image/1987.jpg';
 
-const CarouselCustom = ( props ) => {
-  const poster = props.Poster;
-  return (
-    <Carousel.Item>
-      <img
-        className="d-block w-100"
-        src={ poster }
-        alt="First slide"
-      />
-    </Carousel.Item>
-  )
-}
+// const CarouselCustom = ( props ) => {
+//   const poster = props.Poster;
+//   return (
+//     <Carousel.Item>
+//       <img
+//         className="d-block w-100"
+//         src={ poster }
+//         alt="First slide"
+//       />
+//     </Carousel.Item>
+//   )
+// }
 
 const getMainPage = ( props ) => {
-    const MainState = props.MainState;
-    let [ Posters ] = MainState( [ interstella, OneNine ] );
+  const MainState = props.MainState;
+  let [ Posters ] = MainState( [ interstella, OneNine ] );
     return (
       <>
         <div className='container mt-4 mb-4' style={{ width : "50%"}}>
@@ -51,16 +51,17 @@ const getMainPage = ( props ) => {
               <Carousel.Item>
                 <img
                   className="d-block w-100"
-                  src={ OneNine }
+                  src={ Posters[0] }
                   alt="First slide"
-                  style={{height:"429px"}}
+                  style={{height:"400px"}}
                 />
               </Carousel.Item>
               <Carousel.Item>
                 <img
                   className="d-block w-100"
-                  src={ interstella }
+                  src={ Posters[1] }
                   alt="First slide"
+                  style={{height:"400px"}}
                 />
               </Carousel.Item>
               {/* {
@@ -73,6 +74,9 @@ const getMainPage = ( props ) => {
                     />
                   </Carousel.Item>
                 } )
+              } */}
+              {/* {
+                Posters.map( ( p, idx ) => <CarouselCustom MainState={ props.MainState } Poster={ p } key={ idx }/> )
               } */}
             </Carousel>
           </div>
