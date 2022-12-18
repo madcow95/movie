@@ -3,27 +3,44 @@ import CardGroup from 'react-bootstrap/CardGroup'
 import Card from 'react-bootstrap/Card';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
-import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import interstella from '../Image/interstella.jpg';
+import OneNine from '../Image/1987.jpg';
 
-const getMainPage = () => {
+const CarouselCustom = ( props ) => {
+  const poster = props.Poster;
+  return (
+    <Carousel.Item>
+      <img
+        className="d-block w-100"
+        src={ poster }
+        alt="First slide"
+      />
+    </Carousel.Item>
+  )
+}
+
+const getMainPage = ( props ) => {
+    const MainState = props.MainState;
+    let [ Posters ] = MainState( [ interstella, OneNine ] );
     return (
       <>
         <div className='container mt-4 mb-4' style={{ width : "50%"}}>
-        <InputGroup className="mb-3">
-          <DropdownButton
-            variant="outline-secondary"
-            title="Dropdown"
-            id="input-group-dropdown-1"
-          >
-            <Dropdown.Item href="#">Action</Dropdown.Item>
-            <Dropdown.Item href="#">Another action</Dropdown.Item>
-            <Dropdown.Item href="#">Something else here</Dropdown.Item>
-            <Dropdown.Divider />
-            <Dropdown.Item href="#">Separated link</Dropdown.Item>
-          </DropdownButton>
-          <Form.Control aria-label="Text input with dropdown button" />
-        </InputGroup>
+          <InputGroup className="mb-3">
+            <DropdownButton
+              variant="outline-secondary"
+              title="-선택-"
+              id="input-group-dropdown-1"
+            >
+              <Dropdown.Item href="#">제목</Dropdown.Item>
+              <Dropdown.Item href="#">감독</Dropdown.Item>
+              {/* <Dropdown.Divider /> */}
+            </DropdownButton>
+            <Form.Control />
+            <Button>검색</Button>
+          </InputGroup>
         </div>
         <div
             style={{
@@ -34,43 +51,32 @@ const getMainPage = () => {
               <Carousel.Item>
                 <img
                   className="d-block w-100"
-                  src="holder.js/800x400?text=First slide&bg=f5f5f5"
+                  src={ OneNine }
+                  alt="First slide"
+                  style={{height:"429px"}}
+                />
+              </Carousel.Item>
+              <Carousel.Item>
+                <img
+                  className="d-block w-100"
+                  src={ interstella }
                   alt="First slide"
                 />
-                <Carousel.Caption>
-                  <h5>First slide label</h5>
-                  <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-                </Carousel.Caption>
               </Carousel.Item>
-              <Carousel.Item>
-                <img
-                  className="d-block w-100"
-                  src="holder.js/800x400?text=Second slide&bg=eee"
-                  alt="Second slide"
-                />
-                <Carousel.Caption>
-                  <h5>Second slide label</h5>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                </Carousel.Caption>
-              </Carousel.Item>
-              <Carousel.Item>
-                <img
-                  className="d-block w-100"
-                  src="holder.js/800x400?text=Third slide&bg=e5e5e5"
-                  alt="Third slide"
-                />
-                <Carousel.Caption>
-                  <h5>Third slide label</h5>
-                  <p>
-                    Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-                  </p>
-                </Carousel.Caption>
-              </Carousel.Item>
+              {/* {
+                Posters.map( ( p, idx ) => {
+                  <Carousel.Item key={ idx }>
+                    <img
+                      className="d-block w-100"
+                      src={ p }
+                      alt="First slide"
+                    />
+                  </Carousel.Item>
+                } )
+              } */}
             </Carousel>
           </div>
-          <div
-            className='container mt-5'
-          >
+          <div className='container mt-5'>
             <CardGroup>
               <Card>
                 <Card.Img variant="top" src="holder.js/100px160" />
