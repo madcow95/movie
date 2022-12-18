@@ -66,12 +66,8 @@ const GetJoinPage = ( props ) => {
                         await setSearchUser( false );
                         if( LengthCheck >= 4 ) {
                             await setSearchUser( await JoinValidation( e, axios ) );
-                            if( SearchUser ) {
-                                $( "#JoinBtn" ).attr( "disabled", true );
-                            } else {
-                                $( "#JoinBtn" ).attr( "disabled", false );
-                            }
                         }
+                        SearchUser ? $( "#JoinBtn" ).attr( "disabled", true ) : $( "#JoinBtn" ).attr( "disabled", false );
                      } }/>
                         { 
                             !UserNameCheck &&
