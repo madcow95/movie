@@ -34,8 +34,9 @@ app.get( "/getMember", async ( req, res ) => {
 app.post( "/memberInfo", async ( req, res ) => {
     const findTargettUserName = req.body.username;
     const findUserRes = await db.collection( "member" ).findOne( { username : findTargettUserName } );
-    const returnData = findUserRes ? res.json( findUserRes ) : false;
-    return returnData;
+    // const returnData = findUserRes ? res.json( findUserRes ) : false;
+    res.json( findUserRes );
+    
 } );
 
 app.post( "/memberJoin", async ( req, res ) => {
@@ -46,7 +47,11 @@ app.post( "/memberJoin", async ( req, res ) => {
         email      : req.body.Email,
         phone      : req.body.Phone
     }
-    await db.collection( "member" ).insertOne( JoinData );
+    await db.collection( "member" ).insertOne( JoinData ).then( JoinRes => {
+        res.send( req.body.username );
+    } ).catch( () => {
+        res.send( "err" );
+    } );
 } );
 
 app.get( "*", ( req, res ) => {

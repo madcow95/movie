@@ -41,7 +41,7 @@ const JoinValidation = async ( e, axios ) => {
         } ).catch( e => {
             console.log({e});
         } );
-        return SearchRes;
+        return SearchRes.data;
     } else {
         return false;
     }
@@ -129,7 +129,8 @@ const GetJoinPage = ( props ) => {
                         personName : enteredName.val(),
                         Email      : enteredEmail.val(),
                         Phone      : enteredPhone.val()
-                    } ).then( () => {
+                    } ).then( JoinRes => {
+                        console.log(JoinRes);
                         alert( "회원가입이 완료되었습니다." );
                         navigate( "/" );
                     } ).catch( () => {
