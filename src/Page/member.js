@@ -50,6 +50,7 @@ const JoinValidation = async ( e, axios ) => {
 const GetJoinPage = ( props ) => {
     const axios = props.AxiosState;
     const MainState = props.MainState;
+    const navigate = props.NavagateState;
     const [ UserNameCheck, setUserNameCheck ] = MainState( false );
     const [ SearchUser, setSearchUser ] = MainState( false );
     return (
@@ -62,9 +63,9 @@ const GetJoinPage = ( props ) => {
                 >
                     <Form.Control type="text" placeholder="아이디" onChange={ async ( e ) => {
                         const LengthCheck = e.target.value.length >= 4;
-                        LengthCheck >= 4 ? setUserNameCheck( true ) : setUserNameCheck( false );
+                        LengthCheck ? setUserNameCheck( true ) : setUserNameCheck( false );
                         await setSearchUser( false );
-                        if( LengthCheck >= 4 ) {
+                        if( LengthCheck ) {
                             await setSearchUser( await JoinValidation( e, axios ) );
                         }
                         SearchUser ? $( "#JoinBtn" ).attr( "disabled", true ) : $( "#JoinBtn" ).attr( "disabled", false );
@@ -90,6 +91,12 @@ const GetJoinPage = ( props ) => {
                 </FloatingLabel>
                 <FloatingLabel
                     className="mb-3" 
+                    controlId="PersonName" 
+                    label="Name">
+                    <Form.Control type="email" placeholder="이름" />
+                </FloatingLabel>
+                <FloatingLabel
+                    className="mb-3" 
                     controlId="Email" 
                     label="Email">
                     <Form.Control type="email" placeholder="ex) name@example.com" />
@@ -103,26 +110,30 @@ const GetJoinPage = ( props ) => {
                 <Button variant="primary" type="button" id="JoinBtn" onClick={ async () => {
                     const enteredUserName = $( "#UserName" );
                     const enteredPassword = $( "#Password" );
+                    const enteredName     = $( "#PersonName" );
                     const enteredEmail = $( "#Email" );
                     const enteredPhone = $( "#Phone" );
                     const ValidationProp = [];
                     [ enteredUserName, enteredPassword ].forEach( p => {
                         if( !p.val() ) {
-                            ValidationProp.push( document.getElementById( p ).placeholder );
+                            ValidationProp.push( p.placeholder );
                         }
                     } );
                     if( ValidationProp.length > 0 ) {
                         alert( `다음 항목은 필수값입니다.\n${ ValidationProp.toString() }`);
                         return;
                     }
-                    await axios.post( "/memberInfo", {
-                        username : enteredUserName.val()
-                    } ).then( findRes => {
-                        if( findRes ) {
-                            console.log(findRes);
-                        } else {
-                            console.log("no result");
-                        }
+                    await axios.post( "/memberJoin", {
+                        username   : enteredUserName.val(),
+                        password   : enteredPassword.val(),
+                        personName : enteredName.val(),
+                        Email      : enteredEmail.val(),
+                        Phone      : enteredPhone.val()
+                    } ).then( () => {
+                        alert( "회원가입이 완료되었습니다." );
+                        navigate( "/" );
+                    } ).catch( () => {
+                        alert("에러가 발생했습니다.\n잠시 후 다시 시도해주세요.");
                     } );
                 } }>
                     회원가입

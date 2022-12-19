@@ -38,6 +38,17 @@ app.post( "/memberInfo", async ( req, res ) => {
     return returnData;
 } );
 
+app.post( "/memberJoin", async ( req, res ) => {
+    const JoinData = {
+        username   : req.body.username,
+        password   : req.body.password,
+        personName : req.body.personName,
+        email      : req.body.Email,
+        phone      : req.body.Phone
+    }
+    await db.collection( "member" ).insertOne( JoinData );
+} );
+
 app.get( "*", ( req, res ) => {
     res.sendFile( `${ __dirname }/build/index.html` );
 } );

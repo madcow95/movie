@@ -6,15 +6,14 @@ import memberPage from "./Page/member";
 import main from "./Page/main";
 
 function App() {
-  // const navigate = useNavigate();
-  
+  const navigate = useNavigate();
   return (
     <>
       <component.GetHeader/>
         <Routes>
-          <Route path="/" element={<main.getMainPage MainState={ useState }/>} />
+          <Route path="/" element={<main.getMainPage MainState={ useState } NavagateState={ navigate }/>} />
           <Route path="/login" element={<memberPage.GetLoginPage AxiosState={ axios }/>} />
-          <Route path="/join" element={<memberPage.GetJoinPage AxiosState={ axios } MainState={ useState }/>} />
+          <Route path="/join" element={<memberPage.GetJoinPage AxiosState={ axios } MainState={ useState }  NavagateState={ navigate }/>} />
         </Routes>
     </>
   );
