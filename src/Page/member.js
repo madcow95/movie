@@ -4,6 +4,7 @@ import $ from "jquery";
 
 const GetLoginPage = ( props ) => {
     const axios = props.AxiosState;
+    const navigate = props.NavagateState;
     return (
         <div className='container mt-5'>
             <Form>
@@ -23,10 +24,10 @@ const GetLoginPage = ( props ) => {
                         username : enterdUserName,
                         password : enterdPassword
                     } ).then( findRes => {
-                        if( findRes ) {
-                            console.log(findRes);
+                        if( findRes.data ) {
+                            navigate( "/" );
                         } else {
-                            console.log("no result");
+                            alert( "일치하는 회원이 없습니다." );
                         }
                     } );
                 } }>
