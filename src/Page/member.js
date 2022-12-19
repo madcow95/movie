@@ -1,4 +1,5 @@
 import { Button, Form, FloatingLabel } from 'react-bootstrap';
+import CommonUtil from "../Util/CommonUtil";
 import $ from "jquery";
 
 const GetLoginPage = ( props ) => {
@@ -14,8 +15,10 @@ const GetLoginPage = ( props ) => {
                     <Form.Control type="password" placeholder="비밀번호" />
                 </Form.Group>
                 <Button variant="primary" type="button" onClick={ async () => {
+                    if( !CommonUtil.UserValidation( [ "UserName", "Password" ] ) ) return;
                     const enterdUserName = $( "#UserName" ).val();
                     const enterdPassword = $( "#Password" ).val();
+
                     await axios.post( "/memberInfo", {
                         username : enterdUserName,
                         password : enterdPassword
@@ -108,29 +111,22 @@ const GetJoinPage = ( props ) => {
                     <Form.Control type="text" placeholder="전화번호" />
                 </FloatingLabel>
                 <Button variant="primary" type="button" id="JoinBtn" onClick={ async () => {
+
+                    if( !CommonUtil.UserValidation( [ "UserName", "Password" ] ) ) return;
+
                     const enteredUserName = $( "#UserName" );
                     const enteredPassword = $( "#Password" );
                     const enteredName     = $( "#PersonName" );
                     const enteredEmail = $( "#Email" );
                     const enteredPhone = $( "#Phone" );
-                    const ValidationProp = [];
-                    [ enteredUserName, enteredPassword ].forEach( p => {
-                        if( !p.val() ) {
-                            ValidationProp.push( p.placeholder );
-                        }
-                    } );
-                    if( ValidationProp.length > 0 ) {
-                        alert( `다음 항목은 필수값입니다.\n${ ValidationProp.toString() }`);
-                        return;
-                    }
+
                     await axios.post( "/memberJoin", {
                         username   : enteredUserName.val(),
                         password   : enteredPassword.val(),
                         personName : enteredName.val(),
                         Email      : enteredEmail.val(),
                         Phone      : enteredPhone.val()
-                    } ).then( JoinRes => {
-                        console.log(JoinRes);
+                    } ).then( () => {
                         alert( "회원가입이 완료되었습니다." );
                         navigate( "/" );
                     } ).catch( () => {
