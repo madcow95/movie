@@ -49,10 +49,10 @@ app.post( "/memberJoin", async ( req, res ) => {
         email      : req.body.Email,
         phone      : req.body.Phone
     }
-    await db.collection( "member" ).insertOne( JoinData ).then( JoinRes => {
+    await db.collection( "member" ).insertOne( JoinData ).then( () => {
         res.send( req.body.username );
     } ).catch( () => {
-        res.send( "err" );
+        res.send( "error" );
     } );
 } );
 

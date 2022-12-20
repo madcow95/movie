@@ -15,6 +15,7 @@ const GetLoginPage = ( props ) => {
                 <Form.Group className="mb-3" controlId="Password">
                     <Form.Control type="password" placeholder="비밀번호" />
                 </Form.Group>
+
                 <Button variant="primary" type="button" onClick={ async () => {
                     if( !CommonUtil.UserValidation( [ "UserName", "Password" ] ) ) return;
                     const enterdUserName = $( "#UserName" ).val();
@@ -33,6 +34,20 @@ const GetLoginPage = ( props ) => {
                 } }>
                     로그인
                 </Button>
+
+                <Form.Text className="text-muted" 
+                    style={{
+                        float : "right",
+                        cursor : "pointer"
+                    }}
+                    onClick={
+                        () => {
+                            navigate( "/findInfo" );
+                        }
+                    }
+                    >
+                    아이디/비밀번호 찾기
+                </Form.Text>
             </Form>
         </div>
     )
@@ -141,7 +156,16 @@ const GetJoinPage = ( props ) => {
     )
 }
 
+export const GetFindInfo = () => {
+    return (
+        <div>
+            <h1>아이디/비밀번호 찾기 페이지</h1>
+        </div>
+    )
+}
+
 export default {
     GetLoginPage,
-    GetJoinPage
+    GetJoinPage,
+    GetFindInfo
 }
