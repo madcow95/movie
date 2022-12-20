@@ -32,9 +32,11 @@ app.get( "/getMember", async ( req, res ) => {
 } );
 
 app.post( "/memberInfo", async ( req, res ) => {
-    const findTargettUserName = req.body.username;
-    const findUserRes = await db.collection( "member" ).findOne( { username : findTargettUserName } );
-    // const returnData = findUserRes ? res.json( findUserRes ) : false;
+    const findData = {
+        username : req.body.username,
+        password : req.body.password
+    }
+    const findUserRes = await db.collection( "member" ).findOne( findData );
     res.json( findUserRes );
     
 } );
