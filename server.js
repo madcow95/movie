@@ -37,6 +37,7 @@ app.post( "/memberInfo", async ( req, res ) => {
         password : req.body.password
     }
     const findUserRes = await db.collection( "member" ).findOne( findData );
+    console.log(findUserRes);
     res.json( findUserRes );
     
 } );

@@ -1,6 +1,7 @@
 import { Button, Form, FloatingLabel } from 'react-bootstrap';
 import CommonUtil from "../Util/CommonUtil";
 import $ from "jquery";
+import axios from 'axios';
 
 const GetLoginPage = ( props ) => {
     const axios = props.AxiosState;
@@ -177,8 +178,43 @@ const GetJoinPage = ( props ) => {
 
 export const GetFindInfo = () => {
     return (
-        <div>
-            <h1>아이디/비밀번호 찾기 페이지</h1>
+        <div className='container'>
+            <Form>
+                <FloatingLabel
+                        controlId="UserName"
+                        label="아이디"
+                        className="mt-3">
+                    <Form.Control 
+                        type='text'
+                        label="UserName">
+                    </Form.Control>
+                </FloatingLabel>
+                <FloatingLabel
+                        controlId="Password"
+                        label="비밀번호"
+                        className="mt-3">
+                    <Form.Control 
+                        type='password'
+                        label="Password">
+                    </Form.Control>
+                </FloatingLabel>
+                <Button 
+                    variant="primary" 
+                    type="button" 
+                    id="findBtn" 
+                    className='mt-3'
+                    onClick={ () => {
+                        const findInfo = {
+                            username : $( "#UserName" ).val(),
+                            password : $( "#Password" ).val()
+                        }
+                        axios.get( "/memberInfo", findInfo ).then( findRes => {
+                            console.log(findRes);
+                        } );
+                    } }>
+                        회원가입
+                </Button>
+            </Form>
         </div>
     )
 }
