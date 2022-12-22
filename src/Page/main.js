@@ -69,7 +69,9 @@ const getMainPage = ( props ) => {
             </Carousel>
           </div>
           <div className='container mt-5'>
-            {/* <CardGroup>
+            {/* 
+            아 진짜 UI 너무 하기 싫다
+            <CardGroup>
               <Card>
                 <Card.Img variant="top" src="holder.js/100px160" />
                 <Card.Body>
