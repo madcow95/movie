@@ -72,6 +72,7 @@ const GetJoinPage = ( props ) => {
     const navigate = props.NavagateState;
     const [ UserNameCheck, setUserNameCheck ] = MainState( false );
     const [ SearchUser, setSearchUser ] = MainState( false );
+    const [ PasswordCheck, setPasswordCheck ] = MainState( false );
     return (
         <div className='container mt-5'>
             <Form>
@@ -107,6 +108,24 @@ const GetJoinPage = ( props ) => {
                     controlId="Password" 
                     label="Password">
                     <Form.Control type="password" placeholder="비밀번호" />
+                </FloatingLabel>
+                <FloatingLabel
+                    className="mb-3" 
+                    controlId="PasswordChk" 
+                    label="Password Check"
+                    onChange={ ( e ) => {
+                        if( $( "#Password" ).val() == e.target.value ) {
+                            setPasswordCheck( true );
+                        } else {
+                            setPasswordCheck( false );
+                        }
+                    } }>
+                    <Form.Control type="password" placeholder="비밀번호" />
+                    {
+                        <Form.Text id="PasswordCheckTxt" muted>
+                            { PasswordCheck ? "비밀번호가 일치합니다." : "비밀번호가 일치하지 않습니다." }
+                        </Form.Text>
+                    }
                 </FloatingLabel>
                 <FloatingLabel
                     className="mb-3" 
@@ -164,8 +183,35 @@ export const GetFindInfo = () => {
     )
 }
 
+export const Test = () => {
+    const APIKey = "AIzaSyD6Gzk_-YieLA_oo0v_m1WyyM63QWoBUbo";
+    return (
+        <>
+            <button className="btn" onClick={() => {
+                $.ajax(
+                    {
+                        type : "get",
+                        url : "https://www.googleapis.com/youtube/v3/search?",
+                        data : {
+                            part : "snippet",
+                            key : APIKey,
+                            type : "video",
+                            q : "백종원"
+                        },
+                        success : ( e ) => {
+                            console.log(e);
+                        }
+                    }
+                )
+            }}>숏박스</button>
+            <div className="container"></div>
+        </>
+    )
+}
+
 export default {
     GetLoginPage,
     GetJoinPage,
-    GetFindInfo
+    GetFindInfo,
+    Test
 }
