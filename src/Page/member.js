@@ -208,8 +208,8 @@ export const GetFindInfo = () => {
                             username : $( "#UserName" ).val(),
                             password : $( "#Password" ).val()
                         }
-                        axios.get( "/memberInfo", findInfo ).then( findRes => {
-                            console.log(findRes);
+                        axios.post( "/memberInfo", findInfo ).then( findRes => {
+                            findRes.data ? alert( `${ $( "#UserName" ).val() }의 비밀번호 : \n${ findRes.data.password }입니다.` ) : alert( "일치하는 정보가 없습니다." );
                         } );
                     } }>
                         회원가입
