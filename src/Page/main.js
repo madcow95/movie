@@ -8,19 +8,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import interstella from '../Image/interstella.jpg';
 import OneNine from '../Image/1987.jpg';
-
-// const CarouselCustom = ( props ) => {
-//   const poster = props.Poster;
-//   return (
-//     <Carousel.Item>
-//       <img
-//         className="d-block w-100"
-//         src={ poster }
-//         alt="First slide"
-//       />
-//     </Carousel.Item>
-//   )
-// }
+import CommonUtil from '../Util/CommonUtil';
 
 const getMainPage = ( props ) => {
   const MainState = props.MainState;
@@ -81,7 +69,7 @@ const getMainPage = ( props ) => {
             </Carousel>
           </div>
           <div className='container mt-5'>
-            <CardGroup>
+            {/* <CardGroup>
               <Card>
                 <Card.Img variant="top" src="holder.js/100px160" />
                 <Card.Body>
@@ -146,7 +134,7 @@ const getMainPage = ( props ) => {
                   </Card.Text>
                 </Card.Body>
               </Card>
-            </CardGroup>
+            </CardGroup> */}
           </div>
         </div>
       </>

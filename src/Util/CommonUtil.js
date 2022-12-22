@@ -15,6 +15,26 @@ const UserValidation = ( userProp ) => {
     return true;
 }
 
+const getYoutubeData = ( searchKey ) => {
+    const APIKey = "AIzaSyD6Gzk_-YieLA_oo0v_m1WyyM63QWoBUbo";
+    $.ajax(
+        {
+            type : "get",
+            url : "https://www.googleapis.com/youtube/v3/search?",
+            data : {
+                part : "snippet",
+                key : APIKey,
+                type : "video",
+                q : searchKey
+            },
+            success : ( e ) => {
+                return e;
+            }
+        }
+    )
+}
+
 export default {
-    UserValidation
+    UserValidation,
+    getYoutubeData
 }
