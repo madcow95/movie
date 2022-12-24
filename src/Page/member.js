@@ -224,8 +224,12 @@ const Form = ( props ) => {
     const CompLabel = props.ControleLabel;
     return (
         <>
-            <FloatingLabel>
-
+            <FloatingLabel
+                controlId={CompId}
+                label={CompLabel}
+                className="mt-3"
+                >
+                
             </FloatingLabel>
         </>
     )
