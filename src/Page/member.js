@@ -71,13 +71,18 @@ const GetJoinPage = ( props ) => {
     const axios = props.AxiosState;
     const MainState = props.MainState;
     const navigate = props.NavagateState;
+    const [ CompInfo ] = MainState( [ [ "UserName", "아이디" ], [ "Password", "비밀번호" ], [ "PasswordChk", "비밀번호 확인" ],
+                                      [ "PersonName", "이름" ], [ "Email", "이메일" ], [ "Phone", "전화번호" ] ] );
     const [ UserNameCheck, setUserNameCheck ] = MainState( false );
     const [ SearchUser, setSearchUser ] = MainState( false );
     const [ PasswordCheck, setPasswordCheck ] = MainState( false );
     return (
         <div className='container mt-5'>
             <Form>
-                <FloatingLabel
+                {
+                    CompInfo.map( info => <FormComp ControlIdState={ info[0] } ControleLabel={ info[1] } /> )
+                }
+                {/* <FloatingLabel
                     controlId="UserName"
                     label="Email address"
                     className="mb-3"
@@ -145,8 +150,8 @@ const GetJoinPage = ( props ) => {
                     controlId="Phone" 
                     label="Phone">
                     <Form.Control type="text" placeholder="전화번호" />
-                </FloatingLabel>
-                <Button variant="primary" type="button" id="JoinBtn" onClick={ async () => {
+                </FloatingLabel> */}
+                <Button variant="primary" type="button" id="JoinBtn" className='mt-3' onClick={ async () => {
 
                     if( !CommonUtil.UserValidation( [ "UserName", "Password" ] ) ) return;
 
@@ -176,28 +181,15 @@ const GetJoinPage = ( props ) => {
     )
 }
 
-export const GetFindInfo = () => {
+export const GetFindInfo = ( props ) => {
+    const MainState = props.MainState;
+    let [ FindInfo ] = MainState( [ [ 'UserName', '아이디' ], [ 'Password', '비밀번호' ] ] );
     return (
         <div className='container'>
             <Form>
-                <FloatingLabel
-                        controlId="UserName"
-                        label="아이디"
-                        className="mt-3">
-                    <Form.Control 
-                        type='text'
-                        label="UserName">
-                    </Form.Control>
-                </FloatingLabel>
-                <FloatingLabel
-                        controlId="Password"
-                        label="비밀번호"
-                        className="mt-3">
-                    <Form.Control 
-                        type='password'
-                        label="Password">
-                    </Form.Control>
-                </FloatingLabel>
+                {
+                    FindInfo.map( info => <FormComp ControlIdState={ info[0] } ControleLabel={ info[1] } /> )
+                }
                 <Button 
                     variant="primary" 
                     type="button" 
@@ -219,17 +211,20 @@ export const GetFindInfo = () => {
     )
 }
 
-const Form = ( props ) => {
+const FormComp = ( props ) => {
     const CompId = props.ControlIdState;
     const CompLabel = props.ControleLabel;
     return (
         <>
             <FloatingLabel
-                controlId={CompId}
-                label={CompLabel}
+                controlId={ CompId }
+                label={ CompLabel }
                 className="mt-3"
                 >
-                
+                <Form.Control
+                    type={ CompId == "Password" ? "password" : "text" }
+                    label={ CompLabel }>
+                </Form.Control>
             </FloatingLabel>
         </>
     )
