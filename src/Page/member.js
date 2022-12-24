@@ -219,6 +219,18 @@ export const GetFindInfo = () => {
     )
 }
 
+const Form = ( props ) => {
+    const CompId = props.ControlIdState;
+    const CompLabel = props.ControleLabel;
+    return (
+        <>
+            <FloatingLabel>
+
+            </FloatingLabel>
+        </>
+    )
+}
+
 export const Test = () => {
     const APIKey = "AIzaSyD6Gzk_-YieLA_oo0v_m1WyyM63QWoBUbo";
     return (
