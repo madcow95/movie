@@ -73,84 +73,12 @@ const GetJoinPage = ( props ) => {
     const navigate = props.NavagateState;
     const [ CompInfo ] = MainState( [ [ "UserName", "아이디" ], [ "Password", "비밀번호" ], [ "PasswordChk", "비밀번호 확인" ],
                                       [ "PersonName", "이름" ], [ "Email", "이메일" ], [ "Phone", "전화번호" ] ] );
-    const [ UserNameCheck, setUserNameCheck ] = MainState( false );
-    const [ SearchUser, setSearchUser ] = MainState( false );
-    const [ PasswordCheck, setPasswordCheck ] = MainState( false );
     return (
         <div className='container mt-5'>
             <Form>
                 {
-                    CompInfo.map( info => <FormComp ControlIdState={ info[0] } ControleLabel={ info[1] } /> )
+                    CompInfo.map( info => <FormComp ControlIdState={ info[0] } ControleLabel={ info[1] } MainState={ MainState } /> )
                 }
-                {/* <FloatingLabel
-                    controlId="UserName"
-                    label="Email address"
-                    className="mb-3"
-                >
-                    <Form.Control type="text" placeholder="아이디" onChange={ async ( e ) => {
-                        const LengthCheck = e.target.value.length >= 4;
-                        LengthCheck ? setUserNameCheck( true ) : setUserNameCheck( false );
-                        await setSearchUser( false );
-                        if( LengthCheck ) {
-                            await setSearchUser( await JoinValidation( e, axios ) );
-                        }
-                        SearchUser ? $( "#JoinBtn" ).attr( "disabled", true ) : $( "#JoinBtn" ).attr( "disabled", false );
-                     } }/>
-                        { 
-                            !UserNameCheck &&
-                            <Form.Text id="passwordHelpBlock" muted>
-                                아이디는 4글자 이상 입력해주세요.
-                            </Form.Text>
-                        }
-                        {
-                            UserNameCheck &&
-                            <Form.Text id="UserExistCheck" muted>
-                                { SearchUser ? "이미 사용중인 아이디 입니다." : "사용 가능한 아이디 입니다." }
-                            </Form.Text>
-                        }
-                </FloatingLabel>
-                <FloatingLabel
-                    className="mb-3" 
-                    controlId="Password" 
-                    label="Password">
-                    <Form.Control type="password" placeholder="비밀번호" />
-                </FloatingLabel>
-                <FloatingLabel
-                    className="mb-3" 
-                    controlId="PasswordChk" 
-                    label="Password Check"
-                    onChange={ ( e ) => {
-                        if( $( "#Password" ).val() == e.target.value ) {
-                            setPasswordCheck( true );
-                        } else {
-                            setPasswordCheck( false );
-                        }
-                    } }>
-                    <Form.Control type="password" placeholder="비밀번호" />
-                    {
-                        <Form.Text id="PasswordCheckTxt" muted>
-                            { PasswordCheck ? "비밀번호가 일치합니다." : "비밀번호가 일치하지 않습니다." }
-                        </Form.Text>
-                    }
-                </FloatingLabel>
-                <FloatingLabel
-                    className="mb-3" 
-                    controlId="PersonName" 
-                    label="Name">
-                    <Form.Control type="email" placeholder="이름" />
-                </FloatingLabel>
-                <FloatingLabel
-                    className="mb-3" 
-                    controlId="Email" 
-                    label="Email">
-                    <Form.Control type="email" placeholder="ex) name@example.com" />
-                </FloatingLabel>
-                <FloatingLabel
-                    className="mb-3" 
-                    controlId="Phone" 
-                    label="Phone">
-                    <Form.Control type="text" placeholder="전화번호" />
-                </FloatingLabel> */}
                 <Button variant="primary" type="button" id="JoinBtn" className='mt-3' onClick={ async () => {
 
                     if( !CommonUtil.UserValidation( [ "UserName", "Password" ] ) ) return;
@@ -214,6 +142,11 @@ export const GetFindInfo = ( props ) => {
 const FormComp = ( props ) => {
     const CompId = props.ControlIdState;
     const CompLabel = props.ControleLabel;
+    const MainState = props.MainState;
+
+    const [ SearchUser, setSearchUser ] = MainState( false );
+    const [ UserNameCheck, setUserNameCheck ] = MainState( false );
+    const [ PasswordCheck, setPasswordCheck ] = MainState( false );
     return (
         <>
             <FloatingLabel
@@ -222,8 +155,18 @@ const FormComp = ( props ) => {
                 className="mt-3"
                 >
                 <Form.Control
-                    type={ CompId == "Password" ? "password" : "text" }
-                    label={ CompLabel }>
+                    type={ CompId === "Password" ? "password" : "text" }
+                    label={ CompLabel }
+                    onChange={ async ( e ) => {
+                        if( CompId !== "" ) return;
+                        const LengthCheck = e.target.value.length >= 4;
+                        LengthCheck ? setUserNameCheck( true ) : setUserNameCheck( false );
+                        await setSearchUser( false );
+                        if( LengthCheck ) {
+                            await setSearchUser( await JoinValidation( e, axios ) );
+                        }
+                        SearchUser ? $( "#JoinBtn" ).attr( "disabled", true ) : $( "#JoinBtn" ).attr( "disabled", false );
+                    } }>
                 </Form.Control>
             </FloatingLabel>
         </>
